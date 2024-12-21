@@ -1,4 +1,7 @@
-from api.util import get_project_id_from_request
+from api.util import (
+send_invite_email,
+get_project_id_from_request
+)
 from django_filters.rest_framework import DjangoFilterBackend
 from django.http import JsonResponse
 
@@ -125,25 +128,22 @@ class ProjectRoleViewSet(ProjectFilteredViewSet):
   lookup_field = "prefix"
 
 
-  @action(detail=True, methods=['post'])
-  def update_role(self, request, project_id=None, pk=None):
-    project = self.get_object()
-    user_id = request.data.get('user_id')
-    role_data = request.data.get('role', {})
-    
-    try:
-      user = User.objects.get(id=user_id)
-      role, created = ProjectRole.objects.update_or_create(
-        project=project,
-        user=user,
-        defaults=role_data
-      )
-      return Response({'status': 'role updated'})
-    except User.DoesNotExist:
-      return Response(
-        {'error': 'User not found'}, 
-        status=status.HTTP_404_NOT_FOUND
-      )
+  def create(self, request, **kw):
+    project_id = get_project_id_from_request(request)
+    data = {k: v for k, v in request.data.items()}
+    data['project'] = project_id
+    print(data)
+    id_data = {
+      k: v for k, v in data.items() if k in ['id', 'project', 'user_email']
+    }
+    update_data = {
+      k: v for k, v in data.items() if k not in ['id', 'project', 'user_email']
+    }
+    role, created = ProjectRole.objects.update_or_create(
+      **id_data, defaults=update_data
+    )
+    send_invite_email(request, invitor=request.user.email, invitee=data.get("user_email"))
+    return Response(ProjectRoleSerializer(role).data)
 
   @action(detail=True, methods=['get'])
   def list_roles(self, request, project_id=None, pk=None):

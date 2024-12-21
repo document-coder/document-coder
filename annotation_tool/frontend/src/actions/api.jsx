@@ -70,6 +70,11 @@ api.apiGetPolicies = () => async (dispatch) => {
   await doAPIGet(`policy/`, dispatch, APIActionTypes.GET_POLICIES, (res) => (res.data.results));
 };
 
+api.apiGetProjectRoles = () => async (dispatch) => {
+  log(`called apiGetProjectRoles`);
+  await doAPIGet(`project_role/`, dispatch, APIActionTypes.GET_PROJECT_ROLES, (res) => (res.data.results));
+};
+
 api.apiGetPolicyInstance = (policy_instance_id) => async (dispatch) => {
   log(`called apiGetPolicyInstance`);
   const policy_instance = await doAPIGet(`policy_instance/${policy_instance_id}/`, dispatch, APIActionTypes.GET_POLICY_INSTANCE, (res) => res.data);
@@ -206,6 +211,20 @@ api.apiUpdateCoding = (coding_id, coding) => async (dispatch) => {
 api.apiPostCodingInstance = () => async (dispatch) => {
   log(`called apiPostCodingInstance`);
   _save_fn(store, dispatch, APIActionTypes.POST_CODING_INSTANCE);
+};
+
+
+api.apiPostProjectRole = (role_data) => async (dispatch) => {
+  log(`called apiPostProjectRole`);
+  const res = await axios.post(
+    `${API_PREFIX}/project_role/`,
+    { ...role_data },
+    { headers: { "X-CSRFToken": await get_CSRF_token() } }
+  );
+  store.dispatch({
+    type: APIActionTypes.POST_PROJECT_ROLE,
+    payload: res.data,
+  });
 };
 
 

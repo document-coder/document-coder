@@ -114,6 +114,7 @@ class ProjectRolePermission(ProjectPermissionMixin):
     return True
 
   def _has_write_permission(self, role):
+    print("CHEKCING PROJECT ROLE EDIT PERMISSION", role.is_owner)
     return role.is_owner
 
 class SchemaPermission(ProjectPermissionMixin):

@@ -4,6 +4,7 @@ import { overwrite_stored_object_copies } from "./utils";
 const defaultState = {
   projects: { "_unloaded": true }, // id: <projectinfo>
   policies: { "_unloaded": true }, // id: <policyinfo>
+  project_roles: { "_unloaded": true }, // user_email: <permission_map>
   policy_instances: { "_unloaded": true }, // id: <policyinstance>
   codings: { "_unloaded": true }, // id: <coding>
   coding_instances: { "_unloaded": true }, // id: <codinginstance>
@@ -18,10 +19,10 @@ const defaultState = {
  * @param {Number} objectList[].id
  * @returns
  */
-function _wrapObjectList(objectList) {
+function _wrapObjectList(objectList, field = "id") {
   const to_ret = {};
   for (var c of objectList) {
-    to_ret[c.id] = c;
+    to_ret[c[field]] = c;
   }
   return to_ret;
 }
@@ -79,6 +80,18 @@ export default (state = defaultState, action) => {
         ...state,
         ...{},
       };
+    case APIActionTypes.GET_PROJECT_ROLES:
+      return overwrite_stored_object_copies(
+        state,
+        _wrapObjectList(action.payload, "user_email"),
+        "project_roles"
+      );
+    case APIActionTypes.POST_PROJECT_ROLE:
+      return overwrite_stored_object_copies(
+        state,
+        { [action.payload.user_email]: action.payload },
+        "project_roles"
+      );
     case APIActionTypes.GET_REPORT:
       return { ...state, ...{ report: action.payload } };
     case APIActionTypes.POST_POLICY_INSTANCE_DOCUMENT:
