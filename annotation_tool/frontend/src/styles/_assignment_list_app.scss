@@ -1,0 +1,29 @@
+@use "_variables" as *;
+@use "_mixins";
+
+#assignment-list {
+  #contents {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .coder-assignments {
+    @include mixins.nested-layer-box();
+    width: 1080px;
+    margin-top: 2em;
+    #assignment-list-table {
+      max-width: 1080px;
+      table-layout: fixed;
+      td {
+        width: calc(1080px / 5);
+        max-width: calc(1080px / 5);
+        word-wrap: break-word;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+services:
+  test-db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=test_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  test:
+    build: .
+    command: python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:6789 manage.py test api.tests --testrunner=api.tests.test_runner.DebugTestRunner --noinput --failfast
+    environment:
+      - GOOGLE_CLIENT_ID=test_id
+      - GOOGLE_SECRET=test_secret
+      - GOOGLE_APP_SECRET=test_app_secret
+      - DEBUG=True
+      - DJANGO_SECRET_KEY=testsecretkey
+      - POSTGRES_DB=test_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=test-db
+      - POSTGRES_PORT=5432
+      - PYTHONBREAKPOINT=debugpy.breakpoint
+    depends_on:
+      - test-db
+    ports:
+      - "6789:6789"
+    volumes:
+      - ./:/app
+    working_dir: /app/annotation_tool

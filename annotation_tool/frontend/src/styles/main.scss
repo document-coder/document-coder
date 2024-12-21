@@ -1,0 +1,140 @@
+@use '_raw_policy_view';
+@use '_progress_view';
+@use '_policy_browser';
+@use '_policy_admin';
+@use '_home_app';
+@use '_coding_form';
+@use '_coding_form_merge_mode';
+@use '_coding_admin';
+@use '_assignment_list_app';
+@use "_variables" as *;
+@use "_mixins";
+
+@import "../../node_modules/draft-js/dist/Draft.css";
+
+.hidden {
+  display: none;
+}
+
+#demo-container {
+  align-items: center;
+  min-height: 100vh;
+  padding: 64px;
+}
+
+.card-app-root {
+  background: $nyu-lighter-grey;
+  .card-app-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 1em;
+  }
+  .card-list {
+    padding: .5em;
+  }
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1em;
+  }
+}
+
+.page-root {
+  width: 100vw;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5em;
+  font-size: 18px;
+  #title {
+    background-color: $nyu-dark-purple;
+    color: $nyu-lighter-grey;
+    padding: 1em;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    a {
+      color: white;
+      margin: 1em;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+  .sortable-table {
+    thead {
+      background-color: $nyu-light-grey;
+      th {
+        padding: 0 1em;
+        &.selected {
+          background-color: $nyu-grey;
+          &.reversed {
+            border-top: 3px solid;
+          }
+          &.normal {
+            border-bottom: 3px solid;
+          }
+        }
+        &:hover {
+          background-color: $nyu-grey;
+          cursor: pointer;
+        }
+      }
+    }
+    tbody {
+      tr {
+        &:nth-child(even) {
+          background-color: #eee;
+        }
+        &:hover {
+          background: $nyu-faint-purple;
+        }
+      }
+      td {
+        text-align: center;
+        white-space: nowrap;
+        line-height: 2em;
+        padding: 0 1em;
+      }
+    }
+  }
+  .part-bar {
+    white-space: nowrap;
+    width: 100%;
+    .part-bar-item {
+      border-top: 3px solid black;
+      border-bottom: 3px solid black;
+      display: inline-block;
+      margin: 0px;
+      background-color: grey;
+      line-height: 1.5em;
+      font-size: 1.5em;
+      position: relative;
+      cursor: default;
+      text-align: center;
+      text-overflow: hidden;
+      font-weight: bold;
+      z-index: 0;
+      .part-bar-label {
+        overflow: hidden;
+      }
+      .part-bar-hover {
+        z-index: 1;
+        position: absolute;
+        top: calc(-1.6em);
+        left: 0;
+        display: none;
+        white-space: nowrap;
+        font-weight: bold;
+        background: white;
+      }
+      &:hover {
+        .part-bar-hover {
+          display: inline-block;
+        }
+      }
+    }
+  }
+}

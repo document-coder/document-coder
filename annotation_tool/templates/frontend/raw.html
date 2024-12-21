@@ -1,0 +1,49 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+{% if user.is_authenticated %}
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- semantic-ui CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <title>Privacy Policy Labeller - {{ user.email }} </title>
+    {% if request.META.HTTP_HOST in ["127.0.0.1:8000", "0.0.0.0:8000", "localhost:8000"] %}
+    <link rel="stylesheet" href="{% static 'frontend/index.css' %}"></script>
+    {% else %}
+    <link rel="stylesheet" href="{% static 'frontend/index.css' %}?{% now 'Hm' %}"></script>
+    {% endif %}
+    <script>
+    var CURRENT_USER = "{{ user.email }}";
+    </script>
+  </head>
+
+  <body>
+    <div id="raw-viewer-heading"><p><h1>
+      Raw content from scan of {{ site_name }} taken on {{ scan_dt }}
+    </h1>
+    <hr/>
+    <a href="/code-policy/{{ policy_instance_id }}">Back to coding view</a></p></div>
+    <div id="raw-viewer-html">
+    {% autoescape off %}
+      {{ raw_data }}
+    {% endautoescape %}
+    </div>
+  </body>
+
+{% else %}
+  <head>
+    <script>
+      window.location="{% provider_login_url 'google' %}";
+    </script>
+  </head>
+  <body>
+    you are not logged in and are being redirected.
+    If you can read this, <a href="{% provider_login_url 'google' %}"> click here </a>
+  </body>
+{% endif %}
+
+</html>

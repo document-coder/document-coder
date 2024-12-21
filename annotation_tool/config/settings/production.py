@@ -1,0 +1,66 @@
+from .base import *  # noqa
+
+# Read production env file
+env.read_env(BASE_DIR / ".prodenv")
+
+DEBUG = env('DEBUG', default=False)
+SECURE_SSL_REDIRECT = env('SSL_REDIRECT', default=True)
+
+ALLOWED_HOSTS = [
+  'policycoding.com',
+  'documentcoding.com',
+  'policy-coder-web.eba-9sxfr9sk.us-east-1.elasticbeanstalk.com',
+  'documentcoding.us-east-1.elasticbeanstalk.com',
+  env('ADDITIONAL_ALLOWED_HOSTS', default=''),
+]
+
+CSRF_TRUSTED_ORIGINS = [
+]
+# AWS RDS Database
+if 'RDS_DB_NAME' in env:
+  DATABASES = {
+    'default': {
+      'ENGINE': 'django.db.backends.postgresql',
+      'NAME': env('RDS_DB_NAME'),
+      'USER': env('RDS_USERNAME'),
+      'PASSWORD': env('RDS_PASSWORD'),
+      'HOST': env('RDS_HOSTNAME'),
+      'PORT': env('RDS_PORT'),
+    }
+  }
+else:
+  DATABASES = {
+    'default': env.db()
+  }
+
+# Static/Media files - production paths
+STATIC_URL = env('STATIC_PATH', default='/static/')
+STATIC_ROOT = BASE_DIR / '.static'
+MEDIA_URL = env('MEDIA_PATH', default='/media/')
+MEDIA_ROOT = BASE_DIR / '.data'
+
+# Cache settings
+CACHES = {
+  'default': {
+    'BACKEND': 'django.core.cache.backends.db.DatabaseCache',
+    'LOCATION': 'cache_table',
+  }
+}
+
+# Google auth - production settings
+SOCIALACCOUNT_PROVIDERS = {
+  'google': {
+    'APP': {
+      'client_id': env('GOOGLE_CLIENT_ID'),
+      'secret': env('GOOGLE_APP_SECRET'),
+      'key': '',
+    },
+    'SCOPE': [
+      'profile',
+      'email',
+    ],
+    'AUTH_PARAMS': {
+      'access_type': 'online',
+    }
+  }
+}

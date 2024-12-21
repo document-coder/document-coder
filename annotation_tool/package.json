@@ -1,0 +1,5 @@
+{
+  "devDependencies": {
+    "vite-plugin-watch": "^0.3.1"
+  }
+}

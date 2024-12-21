@@ -1,0 +1,73 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run test suite",
+      "type": "shell",
+      "command": "clear; docker-compose -f docker-compose.test.yml down --remove-orphans && docker-compose -f docker-compose.test.yml up --build --abort-on-container-exit 2>&1 | grep --line-buffered -C0 test-1 | sed -E \"s/^test-1 *\\| //\" | sed -E \"s/\\/app\\///\"",
+      "problemMatcher": [],
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "debug failed tests",
+      "type": "shell",
+      "command": "docker-compose -f docker-compose.debug.yml logs -f",
+      "problemMatcher": [],
+      "dependsOn": [
+        "helper: start debugging container",
+        "helper: attach debugger",
+      ],
+      "dependsOrder": "sequence",
+      "group": "test"
+    },
+    {
+      "label": "helper: start debugging container",
+      "type": "shell",
+      "command": "bash .vscode/debug-tests.sh",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "helper: attach debugger",
+      "type": "shell",
+      "command": "${command:workbench.action.debug.start}",
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "run debug suite",
+      "type": "shell",
+      "command": "clear; docker-compose -f docker-compose.debug.yml down --remove-orphans && docker-compose -f docker-compose.debug.yml up --build --abort-on-container-exit 2>&1 | grep --line-buffered -C0 test-1 | sed -E \"s/^test-1 *\\| //\" | sed -E \"s/\\/app\\///\"",
+      "problemMatcher": [],
+      "isBackground": true,
+      "options": {
+        "enableRestart": "true"
+      },
+    },
+    {
+      "label": "run webapp in docker with debugpy",
+      "type": "shell",
+      "command": "docker-compose logs -f -t",
+      "problemMatcher": [],
+      "options": {
+        "enableRestart": "true"
+      },
+      "dependsOrder": "sequence",
+      "dependsOn": [
+        "helper: rebuild webapp container",
+      ]
+    },
+    {
+      "label": "helper: rebuild webapp container",
+      "type": "shell",
+      "command": "docker-compose down --remove-orphans && docker-compose build && docker-compose up -d",
+      "problemMatcher": [],
+      "options": {
+        "enableRestart": "true"
+      },
+    },
+  ]
+}

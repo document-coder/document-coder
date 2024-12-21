@@ -1,0 +1,21 @@
+{
+  "_NOTE": "if you aren't using vscode, this file doesn't do anything",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "src/*": [
+        "./annotation_tool/frontend/src/*"
+      ]
+    },
+    "jsx": "react",
+    "moduleResolution": "node"
+  },
+  "include": [
+    "annotation_tool/frontend/src/**/*"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    ".static"
+  ]
+}

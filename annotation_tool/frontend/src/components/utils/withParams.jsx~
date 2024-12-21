@@ -1,0 +1,11 @@
+import React, { Component } from "react";
+import { useParams } from "react-router-dom";
+
+export default function withParams(component){
+  return (props) => {
+    const match = {
+      params: useParams(),
+    }
+    return <component match={match} {...props} />
+  }
+}

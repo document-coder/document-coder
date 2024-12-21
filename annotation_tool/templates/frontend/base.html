@@ -1,0 +1,41 @@
+{% load static %}
+{% load socialaccount %}
+<!DOCTYPE html>
+<html lang="en">
+
+{# USER IS AUTHENTICATED #}
+  <head>
+    <title>{% block head_title %}Document Coder{% endblock %}</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- semantic-ui CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css">
+    <link rel="icon" type="image/png" href="{% static 'frontend/favicon.ico' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'frontend/favicon.ico' %}"/>
+
+    {# CACHE BUSTE IF NOT LOCAL #}
+    {% if request.META.HTTP_HOST == "127.0.0.1:8000" %}
+      <link rel="stylesheet" href="{% static 'frontend/index.css' %}"></script>
+
+    {% else %}
+      {% if vite_dev_server %}
+        <link rel="stylesheet" href="{{ vite_dev_server }}/vite-build/index.css?{% now 'Hm' %}"></script>
+      {% else %}
+        <link rel="stylesheet" href="{% static 'frontend/index.css' %}?{% now 'Hm' %}"></script>
+      {% endif %}
+    {% endif %}
+
+    {% if user.is_authenticated %}
+      <script> 
+        var CURRENT_USER = "{{ user.email }}"; 
+      </script>
+    {% endif %}
+  </head>
+
+  <body>
+    {% block content %}{% endblock %}
+  </body>
+
+</html>

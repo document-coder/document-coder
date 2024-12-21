@@ -1,0 +1,59 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python Debugger: Remote Attach",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 5678
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/annotation_tool",
+          "remoteRoot": "."
+        }
+      ]
+    },
+    {
+      "name": "Debug Tests",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 6789
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}",
+          "remoteRoot": "/app"
+        }
+      ],
+      "justMyCode": true,
+      "django": true,
+      "presentation": {
+        "hidden": false,
+        "group": "test",
+        "order": 1
+      }
+    },
+    {
+      "name": "Python Debugger: Run Server Container",
+      "type": "debugpy",
+      "request": "attach",
+      "connect": {
+        "host": "localhost",
+        "port": 5678
+      },
+      "pathMappings": [
+        {
+          "localRoot": "${workspaceFolder}/annotation_tool",
+          "remoteRoot": "."
+        }
+      ],
+      "justMyCode": true,
+    }
+  ],
+  "compounds": []
+}

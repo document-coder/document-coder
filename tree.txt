@@ -1,0 +1,101 @@
+src
+├── Logger.jsx
+├── actions
+│   ├── api.jsx
+│   ├── appActions.jsx
+│   ├── types.jsx
+│   └── userActions.jsx
+├── components
+│   ├── App.jsx
+│   ├── AssignmentListApp.jsx
+│   ├── CodingEditorApp.jsx
+│   ├── CodingInterfaceApp.jsx
+│   ├── DataApp.jsx
+│   ├── HomeApp.jsx
+│   ├── MainRouter.jsx
+│   ├── PolicyApp.jsx
+│   ├── ProgressViewApp.jsx
+│   ├── ProjectListApp.jsx
+│   ├── UploadApp.jsx
+│   ├── assignment-list
+│   │   └── SortableAssignmentTable.jsx
+│   ├── coding-editor
+│   │   ├── CategoryEditor.jsx
+│   │   ├── CodingEditor.jsx
+│   │   ├── CodingList.jsx
+│   │   ├── QuestionEditor.jsx
+│   │   └── QuestionOptionListEditor.jsx
+│   ├── coding-interface
+│   │   ├── CodingForm.jsx
+│   │   ├── PolicyBrowser.jsx
+│   │   ├── coding-form
+│   │   │   ├── BreakoutHeader.jsx
+│   │   │   ├── BreakoutOption.jsx
+│   │   │   ├── CodingCategory.jsx
+│   │   │   ├── CodingOverview.jsx
+│   │   │   ├── FloatingControls.jsx
+│   │   │   ├── MergeElements.jsx
+│   │   │   ├── MultiselectActiveArea.jsx
+│   │   │   ├── ProgressBar.jsx
+│   │   │   ├── QuestionBox.jsx
+│   │   │   ├── QuestionBoxHeader.jsx
+│   │   │   ├── QuestionCheckbox.jsx
+│   │   │   ├── QuestionValueCommentBox.jsx
+│   │   │   └── QuestionValueSelector.jsx
+│   │   └── policy-browser
+│   │       ├── ParagraphSelectArea.jsx
+│   │       ├── PolicyOverview.jsx
+│   │       ├── PolicyPage.jsx
+│   │       ├── PolicyParagraph.jsx
+│   │       ├── PolicyQuicknav.jsx
+│   │       └── PolicySentence.jsx
+│   ├── policy-app
+│   │   ├── AssignmentTool.jsx
+│   │   ├── DocumentPreview.jsx
+│   │   ├── PolicyAdminOverview.jsx
+│   │   ├── PolicyInfoBox.jsx
+│   │   ├── PolicyInstanceDocumentEntry.jsx
+│   │   ├── PolicyInstanceList.jsx
+│   │   └── PolicyList.jsx
+│   ├── utils
+│   │   ├── SessionTimer.jsx
+│   │   ├── displayUtils.jsx
+│   │   ├── mapDispatchToProps.jsx
+│   │   ├── mapStateToProps.jsx
+│   │   ├── util.jsx
+│   │   ├── withParams.jsx
+│   │   └── withParams.jsx~
+│   └── widgets
+│       ├── Heading.jsx
+│       ├── InputBox.jsx
+│       ├── Loading.jsx
+│       ├── MarkdownedText.jsx
+│       ├── PartBar.jsx
+│       ├── PersonalProgressView.jsx
+│       ├── SortableTable.jsx
+│       └── TestDiv.jsx
+├── constants.jsx
+├── globals.d.ts
+├── index.jsx
+├── reducers
+│   ├── codingProgress.jsx
+│   ├── index.jsx
+│   ├── localState.jsx
+│   ├── model.jsx
+│   ├── stateObjects.d.ts
+│   └── utils.jsx
+├── store.jsx
+└── styles
+    ├── _assignment_list_app.scss
+    ├── _coding_admin.scss
+    ├── _coding_form.scss
+    ├── _coding_form_merge_mode.scss
+    ├── _home_app.scss
+    ├── _policy_admin.scss
+    ├── _policy_browser.scss
+    ├── _progress_view.scss
+    ├── _raw_policy_view.scss
+    ├── _variables.scss
+    └── main.scss
+
+12 directories, 86 files

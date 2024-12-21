@@ -1,0 +1,67 @@
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    environment:
+      - POSTGRES_DB=annotation_tool
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - "5432:5432"
+
+  web-dev:
+    build: .
+    restart: unless-stopped
+    command: >
+      sh -c "python manage.py makemigrations api &&
+       python manage.py migrate && 
+       python manage.py collectstatic --noinput &&
+       python manage.py createsuperuser --noinput || true &&
+       python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5678 manage.py runserver 0.0.0.0:8000 --nostatic"
+    volumes:
+      - ./:/app/
+    ports:
+      - "8000:8000"
+      - "5678:5678"
+    environment:
+      - DEBUG=True
+      - DJANGO_SECRET_KEY=devsecretkey
+      - POSTGRES_DB=annotation_tool
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - NODE_ENV=development
+      - VITE_DEV_SERVER=http://localhost:5173
+    depends_on:
+      - db
+
+  # build-frontend:
+  #   build: .
+  #   restart: unless-stopped
+  #   command: >
+  #     sh -c "
+  #       cd /app/annotation_tool/frontend;
+  #       ls;
+  #       npm install && 
+  #       npm ci && 
+  #       npm run dev"
+  #   volumes:
+  #     - ./:/app/
+
+  vite-dev:
+    build: .
+    restart: unless-stopped
+    command: >
+      sh -c "cd /app/annotation_tool/frontend && npm install && npm run dev"
+    volumes:
+      - ./:/app/
+    ports:
+      - "5173:5173"
+    environment:
+      - NODE_ENV=development
+
+volumes:
+  postgres_data:

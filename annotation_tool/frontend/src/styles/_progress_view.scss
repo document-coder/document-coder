@@ -1,0 +1,57 @@
+@use "_variables" as *;
+
+#progress-view {
+  background: $nyu-lighter-purple;
+  #project-progress-container {
+    max-width: 1280px;
+    margin: 2em auto;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    #progress-bars {
+      border: 1px solid $nyu-grey;
+      background-color: white;
+      padding: 1em;
+      border-radius: 0.5em;
+      box-shadow: 0px 0px 2px 0px black;
+      margin-bottom: 2em;
+      .progress-bar-below-text {
+        border: 1px solid $nyu-darker-purple;
+        margin-bottom: .5em;
+      }
+    }
+    .progress-bar-below-text {
+      width: 100%;
+      position: relative;
+      display: block;
+      background-color: white;
+      height: 1.5em;
+      .progress-bar {
+        position: absolute;
+        background: $nyu-lighter-purple;
+        height: 100%;
+        z-index: 0;
+      }
+      .progress-bar-text {
+        position: absolute;
+        color: $nyu-dark-purple;
+        z-index: 1;
+      }
+    }
+    .sortable-table {
+      border: 1px solid $nyu-grey;
+      background-color: white;
+      padding: 1em;
+      border-radius: 0.5em;
+      box-shadow: 0px 0px 2px 0px black;
+      margin-bottom: 2em;
+      .site-category {
+        background: $nyu-lighter-purple;
+        color: $nyu-dark-purple;
+        padding: 0.2em;
+        border-radius: 0.2em;
+        border: 1px solid $nyu-dark-purple;
+      }
+    }
+  }
+}

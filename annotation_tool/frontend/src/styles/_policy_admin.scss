@@ -1,0 +1,221 @@
+@use "_variables" as *;
+@use "mixins";
+
+#policy-management {
+  .policy-list {
+    width: calc(100% - 2em);
+    min-width: 320px;
+    max-width: 1280px;
+    display: grid;
+    gap: .25em;
+    @include mixins.material-box();
+    
+    
+    .policy-card { 
+      font-size: .9em;
+      @include mixins.material-box();
+      .card-header { 
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        gap: 1em;
+      }
+      .instance-grid {
+        display: grid;
+        gap: 1rem;
+      }
+      
+      .instance-create-dialog {
+        padding: 1em;
+        margin-bottom: 1em;
+        @include mixins.material-box();
+      }
+      .instance-create-actions {
+        display: flex;
+        justify-content: right;
+        gap: 1em;
+        padding: .5em;
+      }
+      .instance-card {
+        @include mixins.material-box(); 
+        .instance-card-title {
+          font-size: 1.2em;
+        }
+        
+        .document-list-actions {
+          display: flex;
+          justify-content: right;
+          padding:.5em;
+        }
+        .document-grid {
+          display: grid;
+          
+          .document-card {      
+            font-size: .9em;
+            @include mixins.material-box();                       
+            
+            
+            .document-card-header {
+              font-weight: normal;
+              font-size: 1em;
+              .document-card-title {
+                font-weight: normal;
+                font-size: 1em;
+              }
+            }
+            .document-stats {
+              font-size: 0.875rem;
+              color: #666;
+              margin-top: 0.25rem;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.document-uploader {
+  padding: 1em;
+  @include mixins.material-box();
+  
+  .document-title-input {
+    width: 100%;
+    margin-bottom: 1em;
+    padding: 0.5em;
+    border: 1px solid $nyu-grey;
+  }
+  
+  .upload-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    
+    .upload-help {
+      color: $nyu-dark-grey;
+      font-size: 0.9em;
+    }
+  }
+}
+
+.document-card, .document-uploader {
+  .preview-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+    
+    .error-list {
+      background-color: #fff3f3;
+      border: 1px solid #ffcdd2;
+      padding: 1em;
+      margin-bottom: 1em;
+      
+      .error-item {
+        color: #d32f2f;
+        margin-left: 1em;
+      }
+    }
+  }
+  
+  .preview-content {
+    background-color: white;
+    padding: 1em;
+    
+    .preview-paragraph {
+      padding: 0.5em;
+      display: flex;
+      border-bottom: 1px solid $nyu-light-grey;
+      
+      &:hover {
+        // background-color: $nyu-faint-purple;
+      }
+      .paragraph-info {
+        color: #6d6d6d;
+        width: 5em;
+        min-width: 5em;
+        overflow:hidden;
+        font-family: monospace;
+        font-size: .75em;
+        white-space: nowrap;
+        display: block;
+      }
+      
+      .paragraph-content {
+        white-space: pre-wrap;
+        flex-grow: 1;
+        cursor: default;
+        line-height: 1.2em;
+        .sentence-span {
+          margin-right: 0.5em;
+          &:hover {
+            background-color: $nyu-light-grey;
+          }
+        }
+      }
+      .paragraph-type-section {
+        font-weight: bold;
+        font-size: 1.2em;
+        &.paragraph-level-0 {
+          font-size: 2.5;
+        }
+        &.paragraph-level-1 {
+          font-size: 2.1
+        }
+        &.paragraph-level-2 {
+          font-size: 1.7;
+        }
+        &.paragraph-level-3 {
+          font-size: 1.5;
+        }
+        &.paragraph-level-4 {
+          font-size: 1.2;
+        }
+        
+      }
+      .paragraph-type-list_item::before {
+        content: "•";
+        display: inline-block;
+        margin-right: 1em;
+        margin-left: 5em;
+      }
+      .paragraph-depth-0::before {
+        margin-left: 1em;
+      }
+      .paragraph-depth-1::before {
+        margin-left: 2em;
+      }
+      .paragraph-depth-2::before {
+        margin-left: 3em;
+      }
+      .paragraph-depth-3::before {
+        margin-left: 4em;
+      }
+      .paragraph-depth-4::before {  
+        margin-left: 5em;
+      }
+      
+      .paragraph-actions {
+        align-self: center;
+        text-align: center;
+      }
+      .editing-container {
+        flex-grow: 2;
+        min-width: calc(50% - 5em);
+        textarea {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+    
+    .preview-listitem {
+      margin-left: calc(var(--depth, 0) * 1em);
+    }
+  }
+  
+  .preview-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 1em; 
+  }
+}

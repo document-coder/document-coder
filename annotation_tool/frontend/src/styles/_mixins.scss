@@ -1,0 +1,55 @@
+@use "_variables" as *;
+
+@mixin nested-layer-box($color: white) {
+  border-radius: 0;
+  border: 1px solid $nyu-grey;
+  background-color: $color;
+  opacity: 0.9;
+  transition: box-shadow 0.3s;
+  box-shadow: none;
+  &:hover {
+    box-shadow: 0 0 0.25em 0 $nyu-dark-grey;
+    opacity: 1;
+    z-index: 1;
+  }
+}
+
+@mixin material-box() {
+  @include nested-layer-box();
+
+  &-header {
+    display: flex;
+    align-items: center;
+    background-color: white;
+    cursor: default;
+    .item-count {
+      text-align: right;
+      flex-grow: 1;
+      margin-right: 1em;
+    }
+  }
+
+  &-content {
+    padding: 1rem;
+  }
+
+  &-title {
+    font-size: 1.5em;
+    font-weight: bold;
+  }
+
+  &-expand-button {
+    margin: .5em;
+    padding: .25em;
+    border: 1px solid $nyu-dark-grey;
+    background-color: $nyu-light-grey;
+    line-height: 0.5em;
+    &:hover {
+      background-color: $nyu-grey;
+    }
+    &:active {
+      opacity: 0.8;
+    }
+  }
+
+}
