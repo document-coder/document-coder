@@ -46,7 +46,7 @@
   .assignments-table {
     width: fit-content;
     min-width: 320px;
-    max-width: min(1280px, calc(100% - 2em));
+    max-width: 100%;
     overflow: auto;
     @include mixins.material-box();
 

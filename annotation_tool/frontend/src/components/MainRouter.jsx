@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import AssignmentListApp from "src/components/AssignmentListApp";
 import CodingEditorApp from "src/components/CodingEditorApp";
 import CodingInterfaceApp from "src/components/CodingInterfaceApp";
 import HomeApp from "src/components/HomeApp";

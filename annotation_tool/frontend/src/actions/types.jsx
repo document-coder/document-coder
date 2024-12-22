@@ -29,6 +29,13 @@ export const APIActionTypes = {
   ERROR: "ERROR",
   SERVER_CODING_INSTANCE: "SERVER_CODING_INSTANCE",
 };
+
+export const APIStatusActionTypes = {
+  START: "API_START",
+  SUCCESS: "API_SUCCESS",
+  ERROR: "API_ERROR",
+};
+
 /**
  * @readonly
  * @enum {String}

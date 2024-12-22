@@ -1,4 +1,4 @@
-import _ from "lodash";
+import _, { get } from "lodash";
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import mapDispatchToProps from "src/components/utils/mapDispatchToProps";
@@ -8,97 +8,8 @@ import Heading from "src/components/widgets/Heading";
 import Loading from "src/components/widgets/Loading";
 import SortableTable from "src/components/widgets/SortableTable";
 import { CURRENT_USER } from "src/constants";
-
-const getPolicyInstanceLabel = (policyInstance, policies) => {
-  const policy = policies[policyInstance.policy_id];
-  return `${policy.name} - ${policyInstance.scan_dt}`;
-};
-
-const AssignToSelect = ({ assignment, annotators, onAssign }) => {
-  const [selectedEmail, setSelectedEmail] = React.useState('');
-
-  const handleChange = (e) => {
-    const email = e.target.value;
-    setSelectedEmail(email);
-    onAssign(assignment, email || null);
-  };
-
-  return (
-    <select
-      value={selectedEmail}
-      onChange={handleChange}>
-      <option value="">Select annotator...</option>
-      {annotators.map(role => (
-        <option key={role.user_email} value={role.user_email}>
-          {role.user_email}
-        </option>
-      ))}
-    </select>
-  );
-};
-
-
-const CreateAssignmentDialog = ({
-  onSubmit,
-  onCancel,
-  policyInstances,
-  policies,
-  projectPrefix,
-  defaultCoding
-}) => {
-  const [policyInstanceId, setPolicyInstanceId] = React.useState('');
-  const [label, setLabel] = React.useState('');
-
-  if (policyInstances._unloaded) {
-    return <Loading />;
-  }
-
-  const handleSubmit = () => {
-    const url = `/c/${projectPrefix}/code-policy/${policyInstanceId}-${label}/${defaultCoding}`;
-
-    onSubmit({
-      url,
-      label,
-      status: "UNASSIGNED"
-    });
-  };
-
-  return (
-    <div className="create-assignment-form">
-      <select
-        value={policyInstanceId}
-        onChange={(e) => {
-          setPolicyInstanceId(e.target.value);
-          setLabel(getPolicyInstanceLabel(policyInstances[e.target.value], policies).slice(0, 30));
-        }}>
-        <option value="">Select document collection...</option>
-        {_.map(
-          _.sortBy(policyInstances, (pi) => -pi.id), pi => (
-            <option key={pi.id} value={pi.id}>{
-              getPolicyInstanceLabel(pi, policies)
-            }</option>
-          ))}
-      </select>
-
-      <input
-        type="text"
-        value={label}
-        onChange={(e) => setLabel(e.target.value)}
-        placeholder="Document Collection Name..."
-      />
-
-      <button
-        onClick={handleSubmit}
-        disabled={!policyInstanceId || !label}>
-        Create Assignment
-      </button>
-
-      <button onClick={onCancel}>
-        Cancel
-      </button>
-    </div>
-  );
-};
+import AssignmentCreationDialog from "src/components/assignment-management/AssignmentCreationDialog";
+import { get_assignment_column_list } from "src/components/assignment-management/assignmentManagementUtils";
 
 class AssignmentManagementApp extends Component {
   constructor(props) {
@@ -113,7 +24,7 @@ class AssignmentManagementApp extends Component {
 
     this.handleCreateAssignment = this.handleCreateAssignment.bind(this);
     this.handleAssignTo = this.handleAssignTo.bind(this);
-    this.renderColumns = this.renderColumns.bind(this);
+    this.handleUpdateStatus = this.handleUpdateStatus.bind(this);
   }
 
   handleCreateAssignment(assignmentData) {
@@ -135,67 +46,6 @@ class AssignmentManagementApp extends Component {
       ...assignment,
       status
     });
-  }
-
-  renderColumns(annotators) {
-    return [
-      {
-        name: "Document Collection",
-        display_fn: (assignment) => assignment.label,
-        sort_fn: (assignment) => assignment.label
-      },
-      {
-        name: "Status",
-        display_fn: (assignment) => assignment.status,
-        sort_fn: (assignment) => assignment.status
-      },
-      {
-        name: "Assigned To",
-        display_fn: (assignment) => {
-          if (assignment.status === "UNASSIGNED") {
-            return (
-              <AssignToSelect
-                assignment={assignment}
-                annotators={annotators}
-                onAssign={(assignment, email) => this.handleAssignTo(assignment, email)}
-              />
-            );
-          } else {
-            return <div className="assignee-cell">
-              <span> {assignment.coder_email}</span>
-              <button
-                onClick={() => this.handleAssignTo(assignment, null)}
-                className="unassign-button">
-                Unassign
-              </button>
-            </div>
-          }
-          return;
-        },
-        sort_fn: (assignment) => assignment.coder_email || "zzz"
-      },
-      {
-        name: "Link",
-        display_fn: (assignment) => {
-          return <>
-            {(assignment.coder_email === CURRENT_USER) &&
-              <a href={assignment.url} target="_blank" rel="noreferrer">
-                Go to annotation screen
-              </a>}
-          </>
-        }
-      }, {
-        name: "Actions",
-        display_fn: (assignment) => (
-          <div className="assignment-actions">
-            {assignment.coder_email === CURRENT_USER && <>
-              <div><button onClick={() => this.handleUpdateStatus(assignment, "COMPLETE")}> Complete </button></div>
-              <div><button onClick={() => this.handleUpdateStatus(assignment, "IN_PROGRESS")}> In Progress </button></div>
-            </>}
-          </div>
-        )
-      }
-    ];
   }
 
   render() {
@@ -222,6 +72,12 @@ class AssignmentManagementApp extends Component {
         )}
       </div>
     }
+    console.log(annotators);
+    const columns = get_assignment_column_list({
+      annotators,
+      setAssigneeCallback: this.handleAssignTo,
+      statusChangeCallback: this.handleUpdateStatus
+    })
 
     const createDiv = <div className="create-assignment-holder">
       {!this.state.showCreateForm ? (
@@ -232,7 +88,7 @@ class AssignmentManagementApp extends Component {
           Create New Assignment
         </button>
       ) : (
-        <CreateAssignmentDialog
+        <AssignmentCreationDialog
           policyInstances={policy_instances}
           policies={policies}
           projectPrefix={project_prefix}
@@ -252,7 +108,7 @@ class AssignmentManagementApp extends Component {
           <div className="assignments-table">
             <SortableTable
               items={_.values(filtered_assignments)}
-              columns={this.renderColumns(annotators)}
+              columns={columns}
               sortColumnIdx={1}
             />
             {!coder_email && createDiv}
