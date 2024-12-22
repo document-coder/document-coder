@@ -12,7 +12,8 @@ import mapDispatchToProps from "src/components/utils/mapDispatchToProps";
 import mapStateToProps from "src/components/utils/mapStateToProps";
 import withParams from "src/components/utils/withParams";
 import PolicyManagementApp from "src/components/policy-management/PolicyManagement";
-import UserManagementApp from "src/components/user-management/UserManagementApp";
+import UserManagementApp from "src/components/UserManagementApp";
+import AssignmentManagementApp from "src/components/AssignmentManagementApp";
 
 const PREFIX = `/c/:project_prefix`;
 
@@ -44,8 +45,8 @@ const MainURLSwitch = withParams(connect(
           <Route path={`code-merge/:policy_instance_info`} element={<CodingInterfaceApp />} />
           {/* DOWNLOADING TOOLS */}
           <Route path={`policy`} element={<PolicyManagementApp />} />
-          <Route path={`coder-status/:coder_email`} element={<AssignmentListApp />} />
-          <Route path={`coder-status`} element={<AssignmentListApp />} />
+          <Route path={`coder-status/:coder_email`} element={<AssignmentManagementApp />} />
+          <Route path={`coder-status`} element={<AssignmentManagementApp />} />
           {/* CODING STATUS PAGES */}
           <Route path={`progress`} element={<ProgressViewApp />} />
           {/* CODING EDITOR */}

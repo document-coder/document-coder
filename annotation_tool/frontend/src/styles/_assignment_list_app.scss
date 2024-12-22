@@ -27,3 +27,66 @@
     }
   }
 }
+
+#assignment-management {
+  .create-assignment-form {
+    display: flex;
+    flex-direction: row;
+    gap: 1em;
+    margin-bottom: 2em;
+    padding: .5em;
+    @include mixins.material-box();
+
+    select, input {
+      padding: 0.25em;
+      min-width: 200px;
+    }
+  }
+
+  .assignments-table {
+    width: fit-content;
+    min-width: 320px;
+    max-width: min(1280px, calc(100% - 2em));
+    overflow: auto;
+    @include mixins.material-box();
+
+  .assignee-cell { 
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 0 1em;
+    gap: 1em;
+  }
+  .create-assignment-holder {
+    padding: 0 1em;
+    margin-top: 1em;
+  }
+
+    .assignment-actions {
+      display: flex;
+      gap: 1em;
+      a {
+        color: $nyu-dark-grey;
+        text-decoration: none;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  .create-button {
+    margin-bottom: 1em;
+  }
+
+  .unassign-button {
+    color: red;
+    border: none;
+    background: none;
+    cursor: pointer;
+    padding: 0;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}

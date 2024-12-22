@@ -86,6 +86,12 @@ export default (state = defaultState, action) => {
         _wrapObjectList(action.payload, "user_email"),
         "project_roles"
       );
+    case APIActionTypes.POST_ASSIGNMENT:
+      return overwrite_stored_object_copies(
+        state,
+        { [action.payload.id]: action.payload },
+        "assignments"
+      );
     case APIActionTypes.POST_PROJECT_ROLE:
       return overwrite_stored_object_copies(
         state,

@@ -31,7 +31,7 @@ class CodingEditorApp extends Component {
         {coding_id ? (
           <Heading title={`Editing Annotation Scheme ${coding_id}`} project_prefix={project_prefix} />
         ) : (
-          <Heading title={`Annotation Editor`} project_prefix={project_prefix} />
+          <Heading title={`Annotation Scheme Editor`} project_prefix={project_prefix} />
         )}
         <div id="coding-list">
           {coding_id ? (

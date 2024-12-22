@@ -69,7 +69,7 @@ class CodingList extends Component {
 
     return (
       <div id="coding-table-container">
-        <h2> Saved Codings </h2>
+        <h2> Saved Question Lists </h2>
         <SortableTable id="coding-list-table" items={_.values(codings)} columns={_COLUMNS} />
         <div className="coding-list-actions">
           <button

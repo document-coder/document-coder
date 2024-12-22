@@ -34,13 +34,12 @@ class KVStore(models.Model):
 class Assignment(models.Model):
   project = models.BigIntegerField(default=1)
   created_dt = models.DateTimeField(auto_now_add=True)
-  coder_email = models.CharField(max_length=255)
+  coder_email = models.CharField(max_length=255, null=True)
   url = models.CharField(max_length=255, null=True)
-  label = models.CharField(max_length=255)
+  label = models.CharField(max_length=255, default="")
   notes = models.JSONField(default=dict)
   due_dt = models.DateTimeField(default=_two_weeks_from_now)
   completed_dt = models.DateTimeField(null=True)
-  type = models.BigIntegerField()
   status = models.CharField(max_length=31, default="TRIAGE")
   last_updated = models.DateTimeField(auto_now=True)
 
@@ -57,7 +56,7 @@ class Coding(models.Model):
 class Project(models.Model):
   prefix = models.CharField(max_length=255, db_index=True)
   name = models.CharField(max_length=255)
-  settings = models.JSONField(default=dict)
+  settings = models.JSONField(default=dict, blank=True, null=False)
   last_updated = models.DateTimeField(auto_now=True)
 
 

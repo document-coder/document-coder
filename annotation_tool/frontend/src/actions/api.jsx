@@ -156,6 +156,19 @@ api.apiGetCodingInstance = (policy_instance_id, coding_id) => async (dispatch) =
   }
 };
 
+api.apiPostAssignment = (assignment_data) => async (dispatch) => {
+  log(`called apiPostAssignment`);
+  const res = await axios.post(
+    `${API_PREFIX}/assignment/`,
+    { ...assignment_data },
+    { headers: { "X-CSRFToken": await get_CSRF_token() } }
+  );
+  store.dispatch({
+    type: APIActionTypes.POST_ASSIGNMENT,
+    payload: res.data,
+  });
+};
+
 api.apiGetAllCodingInstances = (policy_instance_id, coding_id) => async (dispatch) => {
   log(`called apiGetAllCodingInstances`);
   const res = await axios.get(`${API_PREFIX}/coding_instance/`, {

@@ -5,13 +5,17 @@ export default function Heading({ coder_email, title }) {
   return (
     <div id="title">
       <div>
-        <h1> {title} </h1>
+        <h1>
+          <span style={{ fontSize: "1.3em", marginRight: ".5em" }}>
+            📋
+          </span>
+          {title} </h1>
       </div>
       <div>
         <a href="..">back</a>
         <a href={`${home_url}`}>home</a>
         <a href="/accounts/logout">logout</a>
       </div>
-    </div>
+    </div >
   );
 }

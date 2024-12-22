@@ -117,6 +117,17 @@ class AssignmentViewSet(ProjectFilteredViewSet):
   ordering_fields = '__all__'
   filterset_fields = ['id']
 
+  def create(self, request, **kw): 
+    project_id = get_project_id_from_request(request)
+    data = {k: v for k, v in request.data.items()}
+    data['project'] = project_id
+    update_data = {
+      k: v for k, v in data.items() if k not in ['id']
+    }
+    assignment, created = Assignment.objects.update_or_create(
+      id=data.get('id'), defaults=update_data
+    )
+    return Response(AssignmentSerializer(assignment).data)
 
 class ProjectRoleViewSet(ProjectFilteredViewSet):
   queryset = ProjectRole.objects.all()
@@ -132,7 +143,6 @@ class ProjectRoleViewSet(ProjectFilteredViewSet):
     project_id = get_project_id_from_request(request)
     data = {k: v for k, v in request.data.items()}
     data['project'] = project_id
-    print(data)
     id_data = {
       k: v for k, v in data.items() if k in ['id', 'project', 'user_email']
     }
