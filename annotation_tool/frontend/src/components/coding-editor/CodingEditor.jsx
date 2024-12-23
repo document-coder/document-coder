@@ -75,7 +75,7 @@ class SidebarPreview extends Component {
           {category.questions.map((question, idx) => (
             <div
               className='sidebar-link'
-              id={`link-to-${question.id}`}
+              id={`link-to-${`${question.id}`.replace(/[^a-zA-Z0-9]/g, "_")}`}
               key={idx}
               onClick={this.handleClick}>
               [{question.id}] {question.label}
@@ -159,7 +159,7 @@ class CodingEditor extends Component {
     const equalityTest = JSON.stringify(serverCoding.categories) == JSON.stringify(coding.categories);
     const validationErrors = this.validateCategories(coding.categories);
 
-    const isSaveDisabled = validationErrors.length > 0 || !equalityTest;
+    const isSaveDisabled = validationErrors.length > 0;
 
     return (
       <div id="coding-editor">

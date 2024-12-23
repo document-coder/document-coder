@@ -21,7 +21,7 @@ $min-editor-width: 480px;
     bottom: 0;
     left: 0;
     right: 0;
-    grid-template-columns: min(10em, calc(90vw - $min-editor-width)) 1fr;
+    grid-template-columns: min(15em, calc(90vw - $min-editor-width)) 1fr;
     justify-content: center;
     background-color: $nyu-grey;
     > div {
@@ -45,7 +45,6 @@ $min-editor-width: 480px;
       border-right: 1px solid $nyu-black;
       padding: .5em;
       text-align: center;
-          overflow: hidden;
       .sidebar-title{
         font-weight: bold;
         font-size: 1.5em;

@@ -35,7 +35,6 @@ class Loading extends Component {
       );
     }
     const errors = this.props.errors?.errors || [];
-    console.log(errors, this.props);
     return (
       <div id="error-page" className="page-root card-app-root">
         <Heading title="(error)" />

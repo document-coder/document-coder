@@ -17,7 +17,7 @@ const _QUESTION_TYPES = [
  */
 export default function QuestionEditor({ question, questionChanged, deleteQuestion }) {
   return (
-    <div className="question-edit-form" id={`${question.id}`}>
+    <div className="question-edit-form" id={`${question.id}`.replace(/[^a-zA-Z0-9]/g, "_")}>
 
       <button className="delete-button" onClick={deleteQuestion}>
         delete question
