@@ -7,17 +7,22 @@ A web-based platform that helps research teams systematically annotate collectio
   - Enables highlighting relevant text passages while answering questions
   - Dozens of quality-of-life features to make annotating faster and easier, developed over years of iterative improvement and use.
   - Works offline, with automatic and manual recovery features once connection is restored
-  ![screenshot - annotation](https://raw.githubusercontent.com/davidbstein/document-coder/refs/heads/main/docs/images/annotation_screen_example.png)
+
+|  ![screenshot - annotation](https://raw.githubusercontent.com/davidbstein/document-coder/refs/heads/main/docs/images/annotation_screen_example.png) |
+| :----: |
+| Annotation interface |
+
 #### Project Management
   - Provides tools for reviewing and reconciling annotations
   - Tracks and managements project progress
   - Coordinates multiple annotators working on the same documents
 
-Document Management | Annotation Editing & Tracking
-:-------------------------:|:-------------------------:
 ![screenshot - document management](https://raw.githubusercontent.com/davidbstein/document-coder/refs/heads/main/docs/images/document_management_example.png) |  ![screenshot - question editor](https://raw.githubusercontent.com/davidbstein/document-coder/refs/heads/main/docs/images/question_editor_example.png)
+:-------------------------:|:-------------------------:
+Document Management | Annotation Editing & Tracking
+
 #### Secure
-  - Can be configured to supports most institutional login systems.
+  - Can be configured to support most institutional login systems.
 
 ## Getting Started
 
