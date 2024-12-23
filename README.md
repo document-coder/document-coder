@@ -54,7 +54,7 @@ Document Management | Annotation Editing & Tracking
 
 If you use this tool in your research, please cite:
 
-    [Citation placeholder]
+    [Citation placeholder while paper is undergoing peer review]
 
 ## Documentation
 
