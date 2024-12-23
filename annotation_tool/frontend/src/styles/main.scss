@@ -8,6 +8,7 @@
 @use '_coding_admin';
 @use '_assignment_list_app';
 @use '_user_management';
+@use '_errors';
 @use "_variables" as *;
 @use "_mixins";
 
@@ -21,6 +22,15 @@
   align-items: center;
   min-height: 100vh;
   padding: 64px;
+}
+
+#loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 6em;
+  color: lightgrey;
 }
 
 .card-app-root {
@@ -49,6 +59,7 @@
   line-height: 1.5em;
   font-size: 18px;
   #title {
+    height: $header-height;
     background-color: $nyu-dark-purple;
     color: $nyu-lighter-grey;
     padding: 1em;

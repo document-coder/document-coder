@@ -48,6 +48,23 @@ class AssignmentManagementApp extends Component {
     });
   }
 
+  wrapRenderedContent(content) {
+    const {
+      match: { params: { project_prefix } }
+    } = this.props;
+    return (
+      <div id="assignment-management" className="page-root card-app-root">
+        <Heading
+          title="Assignment Management"
+          project_prefix={project_prefix}
+        />
+        <div className="card-app-content">
+          {content}
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const {
       model: { assignments, policy_instances, project_roles, project, policies },
@@ -64,15 +81,14 @@ class AssignmentManagementApp extends Component {
       assignments;
 
     if (filtered_assignments.length === 0) {
-      return <div className="create-assignment-holder">
+      return this.wrapRenderedContent(<div className="create-assignment-holder">
         {coder_email ? (
           `There is currently nothing assigned to ${coder_email}`
         ) : (
           "There are no assignments in this project"
         )}
-      </div>
+      </div>);
     }
-    console.log(annotators);
     const columns = get_assignment_column_list({
       annotators,
       setAssigneeCallback: this.handleAssignTo,
@@ -98,23 +114,14 @@ class AssignmentManagementApp extends Component {
         />
       )}
     </div>
-    return (
-      <div id="assignment-management" className="page-root card-app-root">
-        <Heading
-          title="Assignment Management"
-          project_prefix={project_prefix}
-        />
-        <div className="card-app-content">
-          <div className="assignments-table">
-            <SortableTable
-              items={_.values(filtered_assignments)}
-              columns={columns}
-              sortColumnIdx={1}
-            />
-            {!coder_email && createDiv}
-          </div>
-        </div>
-      </div>
+    return this.wrapRenderedContent(<div className="assignments-table">
+      <SortableTable
+        items={_.values(filtered_assignments)}
+        columns={columns}
+        sortColumnIdx={1}
+      />
+      {!coder_email && createDiv}
+    </div>
     );
   }
 }

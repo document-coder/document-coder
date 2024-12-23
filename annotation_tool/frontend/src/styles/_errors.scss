@@ -1,0 +1,79 @@
+@use '_variables' as *;
+@use '_mixins';
+
+#error-page {
+  .error-item {
+    @include mixins.material-box();
+    > div {
+      display: flex;
+      gap: 1em;
+      justify-content: space-around;
+      padding: .5em 1em;
+      flex-wrap: wrap;
+    }
+  }
+  .error-field {
+    font-family: monospace;
+    font-size: .8em;
+    border: 1px solid #ccc;
+    padding: .1em .5em;
+    flex-grow: 1;
+  }
+}
+
+#toast-container{
+  top: 0;
+  left: 1em;
+  right: 1em;
+  position: absolute;
+  display: none;
+  z-index: 9999;
+  &.active {
+    display: flex;
+    justify-content: center;
+  }
+  .toast {
+    position: relative;
+    background: pink;
+    opacity: 1;
+    border: 2px solid darkred;
+    color: darkred;
+    border-radius: 1em;
+    padding: 1em;
+    font-size: .8em;
+    line-height: 1.2em;
+    font-family: monospace;
+    max-width: 1280px;
+    transition: all 0.5s;
+    max-height: 6em;
+    overflow: hidden;
+    &.ready {
+      opacity: 0;
+      top: -6em;
+    }
+    &.active {
+      opacity: 1;
+      top: 0;
+    }
+    &.error-code-400, &.error-code-401, &.error-code-403 {
+      background: lightyellow;
+      color: brown;
+      border-color: brown;
+    }
+    &.error-code-404 {
+      background: lightblue;
+      color: darkblue;
+      border-color: darkblue;
+    }
+    &.error-code-500, &.error-code-501, &.error-code-502, &.error-code-503 {
+      background: pink;
+      color: darkred;
+      border-color: darkred;
+    }
+    .explanation {
+      font-size: 1.5em;
+      font-family: sans-serif;
+      font-weight: normal;
+    }
+  }
+}

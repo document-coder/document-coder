@@ -92,7 +92,6 @@
 
   .coding-form-question-container {
     margin: 16px 0;
-    transition: all 0.5s linear;
     background: #fff9ff;
     box-shadow: 1px 1px 4px 0px #838;
   }
@@ -157,7 +156,6 @@
   }
   .coding-form-breakout-option-outer-container {
     padding: 0 16px;
-    transition: all 0.2s linear;
     background: #fff9ff;
   }
   .coding-form-breakout-option-outer-container.active-breakout {
@@ -174,12 +172,10 @@
   }
   .coding-form-breakout-master-container {
     margin: 16px 0 0 0;
-    transition: all 0.2s linear;
     background: #fff9ff;
   }
   .coding-form-breakout-option-container {
     margin: -1px 0;
-    transition: all 0.2s linear;
     background: #fff9ff;
     .inactive-question:hover {
       background: #ffddff;

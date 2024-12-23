@@ -10,4 +10,5 @@ export default (state, useParams = null) => ({
   codingProgress: state.codingProgressStore,
   localState: state.localState,
   route: useParams ? useParams : null,
+  errors: state.errors,
 });

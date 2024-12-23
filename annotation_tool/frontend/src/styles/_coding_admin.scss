@@ -1,6 +1,6 @@
 @use "_variables" as *;
 @use "mixins";
-
+$min-editor-width: 480px;
 #coding-editor-list {
   background-color: $nyu-lighter-purple;
   .action-buttons-container {
@@ -12,33 +12,74 @@
     display: flex;
     align-items: center;
     justify-content: space-around;
-    padding-top: 5vh;
-    margin-left: 15vw;
+    margin-top: $header-height;
+  }
+  #coding-editor {
+    display: grid;
+    position: absolute;
+    top: $header-height;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    grid-template-columns: min(10em, calc(90vw - $min-editor-width)) 1fr;
+    justify-content: center;
+    background-color: $nyu-grey;
+    > div {
+      height: 100%;
+      width: 100%;
+      overflow: auto;
+    }
     #save-buttons {
-  font-size: 2em;
-  line-height: 2em;
-  display: flex;
-  gap: 1em;
-}
+      font-size: 2em;
+      line-height: 2em;
+      display: flex;
+      gap: 1em;
+    }
     #coding-edit-sidebar-preview {
-      position: fixed;
-      left: 0;
-      top: 4em;
-      bottom: 0px;
-      width: 15vw;
+      place-self: stretch;
       white-space: nowrap;
       text-overflow: ellipsis;
       overflow: hidden;
-      overflow-y: scroll;
-      .sidebar-link{
-        &:hover {
-          background-color: $nyu-faint-purple;
-          cursor: pointer;
-        }
-        &.selected {
+      overflow-y: auto;
+      background-color: #999;
+      border-right: 1px solid $nyu-black;
+      padding: .5em;
+      text-align: center;
+          overflow: hidden;
+      .sidebar-title{
+        font-weight: bold;
+        font-size: 1.5em;
+      }
+      .sidebar-category {
+        border: 1px solid $nyu-black;
+        background-color: $nyu-grey;
+        margin-top: 1em;
+        .sidebar-category-title {
+          font-size: 1.25em;
           font-weight: bold;
-          border: 1px solid purple;
-          margin: -1px;
+          background-color: #AAA;
+          padding: 0;
+          margin: 0;
+            text-overflow: ellipsis;
+
+          width:100%;
+          overflow: hidden;
+          cursor: default;
+        }
+        .sidebar-link{
+          overflow: hidden;
+            text-overflow: ellipsis;
+
+          &:hover {
+            background-color: $nyu-light-grey;
+            text-decoration: underline;
+            cursor: pointer;
+          }
+          &.selected {
+            text-decoration: underline;
+            border: 1px solid purple;
+            margin: -1px;
+          }
         }
       }
     }
@@ -51,163 +92,178 @@
     }
     #changes-alert.unsaved {
       position: fixed;
-      top: 0;
+      bottom: 0;
       width: 100%;
       left: 0;
       text-align: center;
       background-color: goldenrod;
       color: brown;
+      &.invalidated {
+        background-color: darkred;
+        color: white;
+        white-space: pre-wrap;
+      }
     }
+    
     #coding-edit-area {
-      max-width: 1200px;
-      width: 80vw;
-      border: 1px solid $nyu-dark-purple;
-      padding: 1em;
-      margin: 1em;
-      button {
-        margin: 0.5em 0;
-        padding: 0.25em;
-        transition: background-color 0.2s;
-        border-radius: 0.25em;
-        border: 1px solid;
-        background-color: $nyu-lighter-grey;
-        &:hover {
-          background-color: $nyu-light-grey;
+      place-self: center;
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: $min-editor-width;
+      #coding-edit-content {
+        width: 100%;
+        max-width: 1200px;
+        border: 1px solid $nyu-dark-purple;
+        padding: 1em;
+        margin: 1em;
+        background-color: $nyu-lighter-purple;
+        button {
+          margin: 0.5em 0;
+          padding: 0.25em;
+          transition: background-color 0.2s;
+          border-radius: 0.25em;
+          border: 1px solid;
+          background-color: $nyu-lighter-grey;
+          &:hover {
+            background-color: $nyu-light-grey;
+          }
+          &:active {
+            opacity: 0.8;
+          }
         }
-        &:active {
-          opacity: 0.8;
+        button.delete-button {
+          width: default;
+          margin: 0.5em 0;
+          padding: 0.25em;
+          color: darkred;
+          background-color: #fdd;
+          border: 1px solid darkred;
+          &:hover {
+            background-color: #fcc;
+          }
         }
-      }
-      button.delete-button {
-        width: default;
-        margin: 0.5em 0;
-        padding: 0.25em;
-        color: darkred;
-        background-color: #fdd;
-        border: 1px solid darkred;
-        &:hover {
-          background-color: #fcc;
-        }
-      }
-      .category-edit-holder {
-        .category-editor {
-          padding: 1em;
-          input,
-          textarea {
-            border: 1px solid $nyu-light-grey;
-            &::placeholder {
-              font-style: italic;
+        .category-edit-holder {
+          .category-editor {
+            padding: 1em;
+            input,
+            textarea {
+              border: 1px solid $nyu-light-grey;
+              &::placeholder {
+                font-style: italic;
+              }
             }
-          }
-          .category-title { 
-            display: flex;
-            font-size: 2em;
-            font-weight: bold;
-            margin-bottom: 0.5em;
-            justify-content: center;
-            align-items: baseline;
-            padding: .5em;
-          }
-          .input-box {
-            flex-grow: 2;
-            input {
-              width: 100%;
-              text-align: left;
+            .category-title { 
+              display: flex;
+              font-size: 2em;
+              font-weight: bold;
+              margin-bottom: 0.5em;
+              justify-content: center;
+              align-items: baseline;
+              padding: .5em;
             }
-          }
-          
-          @include mixins.nested-layer-box($nyu-faint-purple);
-          .question-edit-container {
-
-      button {
-        margin: 0;
-      }
-            .question-edit-form {
-              width: 100%;
-              margin: 1.5em 0;
-              padding: 1em;
-              @include mixins.nested-layer-box();
-              .input-box {
-                input[type] {
-                  width: 100%;
-                  padding: 0.25em;
-                }
-              }
-              & > .delete-button {
-                margin-left: auto;
-              }
-              .question-edit-label {
+            .input-box {
+              flex-grow: 2;
+              input {
                 width: 100%;
-                input {
-                  flex-basis: 100%;
-                  font-size: 1.5em;
-                  font-weight: bold;
-                }
+                text-align: left;
               }
-              .question-edit-info,
-              .question-edit-description {
+            }
+            
+            @include mixins.nested-layer-box($nyu-faint-purple);
+            .question-edit-container {
+              
+              button {
+                margin: 0;
+              }
+              .question-edit-form {
                 width: 100%;
-                textarea {
-                  width: 100%;
-                  margin-top: 0.25em;
-                  font-size: 1em;
-                  padding: 0.5em;
-                }
-              }
-              .question-edit-type {
-                width: 20em;
-                margin-left: 1em;
-              }
-              .question-option-list {
-                display:block;
-                .radio-buttons {
-                  display: flex;
-                  flex-direction: row;
-                  gap: 1em;
-                  padding: 0.25em 2em;
-                  label {
-                    border: 1px solid;
-                    display: flex;
-                    width: 15em;
-                    align-items: baseline;
-                    gap: .5em;
-                    padding: .25em;
-                  }
-                  label.checked {
-                    border: 1px solid $nyu-purple;
-                    font-weight: bold;
-                  }
-                }
-                .value-list-heading {
-                  font-weight: bolder;
-                  color: $nyu-purple;
-                }
-                button {
-                  max-width: 15%;
-                  width: 100px;
-                  flex-grow: 1;
-                }
-                .question-option-editor {
-                  display: flex;
-                  width: 100%;
-                  flex-direction: row;
-                  align-items: center;
-                  padding-left: 2em;
-                  input {
+                margin: 1.5em 0;
+                padding: 1em;
+                @include mixins.nested-layer-box();
+                .input-box {
+                  input[type] {
                     width: 100%;
+                    padding: 0.25em;
                   }
-                  .question-option-value.input-box {
-                    max-width: 4em;
-                    text-align: center;
+                }
+                & > .delete-button {
+                  margin-left: auto;
+                }
+                .question-edit-label {
+                  width: 100%;
+                  input {
+                    flex-basis: 100%;
+                    font-size: 1.5em;
                     font-weight: bold;
+                  }
+                }
+                .question-edit-info,
+                .question-edit-description {
+                  width: 100%;
+                  textarea {
+                    width: 100%;
+                    margin-top: 0.25em;
+                    font-size: 1em;
+                    padding: 0.5em;
+                  }
+                }
+                .question-edit-type {
+                  width: 20em;
+                  margin-left: 1em;
+                }
+                .question-option-list {
+                  display:block;
+                  .radio-buttons {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 1em;
+                    padding: 0.25em 2em;
+                    label {
+                      border: 1px solid;
+                      display: flex;
+                      width: 15em;
+                      align-items: baseline;
+                      gap: .5em;
+                      padding: .25em;
+                    }
+                    label.checked {
+                      border: 1px solid $nyu-purple;
+                      font-weight: bold;
+                    }
+                  }
+                  .value-list-heading {
+                    font-weight: bolder;
+                    color: $nyu-purple;
+                  }
+                  button {
+                    max-width: 15%;
+                    width: 100px;
                     flex-grow: 1;
                   }
-                  .question-option-label.input-box,
-                  .question-option-detail.input-box {
-                    width: 4em;
-                    text-align: center;
-                    font-weight: bold;
-                    flex-grow: 1;
+                  .question-option-editor {
+                    display: flex;
+                    width: 100%;
+                    flex-direction: row;
+                    align-items: center;
+                    padding-left: 2em;
+                    input {
+                      width: 100%;
+                    }
+                    .question-option-value.input-box {
+                      max-width: 4em;
+                      text-align: center;
+                      font-weight: bold;
+                      flex-grow: 1;
+                    }
+                    .question-option-label.input-box,
+                    .question-option-detail.input-box {
+                      width: 4em;
+                      text-align: center;
+                      font-weight: bold;
+                      flex-grow: 1;
+                    }
                   }
                 }
               }

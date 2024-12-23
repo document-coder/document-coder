@@ -10,12 +10,9 @@ from rest_framework.response import Response
 from rest_framework import (
   viewsets, 
   filters,
-  permissions,
 )
 
 from api.permissions import (
-  IsProjectOwner,
-  HasProjectPermission,
   ProjectRolePermission,
   SchemaPermission,
   ContentPermission,

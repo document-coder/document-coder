@@ -68,16 +68,17 @@ class SidebarPreview extends Component {
     } = this.props;
 
     return <div id='coding-editor-sidebar'>
+      <div className="sidebar-title">Quick Nav</div>
       {categories.map((category, idx) => {
-        return <div key={idx}>
-          <h2>{category.label}</h2>
+        return <div key={idx} className="sidebar-category">
+          <div className="sidebar-category-title">{category.label}</div>
           {category.questions.map((question, idx) => (
             <div
               className='sidebar-link'
               id={`link-to-${question.id}`}
               key={idx}
               onClick={this.handleClick}>
-              {question.label}
+              [{question.id}] {question.label}
             </div>
           ))}
         </div>
@@ -93,6 +94,7 @@ class CodingEditor extends Component {
     this.deleteCat = this._deleteCat.bind(this);
     this.updateCat = this._updateCat.bind(this);
     this.replaceCategoryQuestions = this._replaceCategoryQuestions.bind(this);
+    this.validateCategories = this.validateCategories.bind(this);
   }
 
   _replaceCategoryQuestions(newQuestions) {
@@ -124,6 +126,30 @@ class CodingEditor extends Component {
     this.replaceCategoryQuestions(deleteItem(coding.categories, categoryIdx));
   }
 
+  validateCategories(categories) {
+    const errors = [];
+    const seenIds = new Set();
+    const duplicateIds = new Set();
+
+    categories.forEach((category, categoryIdx) => {
+      category.questions.forEach((question, questionIdx) => {
+        if (!question.id) {
+          errors.push(`Category ${category.label || categoryIdx} has a question without an ID.`);
+        } else if (seenIds.has(question.id)) {
+          duplicateIds.add(question.id);
+        } else {
+          seenIds.add(question.id);
+        }
+      });
+    });
+
+    if (duplicateIds.size > 0) {
+      errors.push(`Duplicate question IDs found: ${Array.from(duplicateIds).join(", ")}.`);
+    }
+
+    return errors;
+  }
+
   render() {
     const { coding_id } = this.props;
     const coding = this.props.localState.localCodings[coding_id];
@@ -131,44 +157,58 @@ class CodingEditor extends Component {
 
     const serverCoding = this.props.model.codings[coding_id];
     const equalityTest = JSON.stringify(serverCoding.categories) == JSON.stringify(coding.categories);
+    const validationErrors = this.validateCategories(coding.categories);
+
+    const isSaveDisabled = validationErrors.length > 0 || !equalityTest;
+
     return (
-      <div>
+      <div id="coding-editor">
         <div id="coding-edit-sidebar-preview"><SidebarPreview coding={coding} /></div>
         <div id="coding-edit-area">
-          {coding.categories.map((category, categoryIdx) => {
-            return (
-              <div className="category-edit-holder" key={categoryIdx}>
-                <button onClick={() => this.addCat(categoryIdx)}> add category  </button>
-                <CategoryEditor
-                  category={category}
-                  categoryChanged={(newCategoryContent) =>
-                    this.updateCat(categoryIdx, newCategoryContent)
-                  }
-                  deleteCategory={() => this.deleteCat(categoryIdx)}
-                />
-              </div>
-            );
-          })}
-          <div className="action-buttons-container">
-            <button onClick={() => this.addCat(coding.categories.length)}>
-              add category
+          <div id="coding-edit-content">
+            {coding.categories.map((category, categoryIdx) => {
+              return (
+                <div className="category-edit-holder" key={categoryIdx}>
+                  <button onClick={() => this.addCat(categoryIdx)}> add category  </button>
+                  <CategoryEditor
+                    category={category}
+                    categoryChanged={(newCategoryContent) =>
+                      this.updateCat(categoryIdx, newCategoryContent)
+                    }
+                    deleteCategory={() => this.deleteCat(categoryIdx)}
+                  />
+                </div>
+              );
+            })}
+            <div className="action-buttons-container">
+              <button onClick={() => this.addCat(coding.categories.length)}>
+                add category
+              </button>
+            </div>
+          </div>
+          <div id="save-buttons">
+            <button
+              onClick={() => this.props.apiUpdateCoding(coding_id, coding)}
+              disabled={isSaveDisabled}>
+              Save
+            </button>
+            <button
+              onClick={() => {
+                this.props.apiSaveCoding(coding, true);
+              }}
+              disabled={isSaveDisabled}>
+              Save as Copy
             </button>
           </div>
-        </div>
-        <div id="save-buttons">
-          <button onClick={() => this.props.apiUpdateCoding(coding_id, coding)}> Save </button>
-          <button
-            onClick={() => {
-              this.props.apiSaveCoding(coding, true);
-            }}
-          >
-            Save as Copy
-          </button>
-          <div id="changes-alert" className={equalityTest ? "saved" : "unsaved"}>
-            {equalityTest ? "everything is up to date." : "THERE ARE UNSAVED CHANGES"}
+          <div id="changes-alert" className={`${equalityTest ? "saved" : "unsaved"} ${validationErrors.length ? "invalidated" : "validated"}`}>
+            {validationErrors.length > 0
+              ? `${validationErrors.join("\n")}`
+              : equalityTest
+                ? " everything is up to date. "
+                : " THERE ARE UNSAVED CHANGES "}
           </div>
+          <a href="..">back to coding list...</a>
         </div>
-        <a href="..">back to coding list...</a>
       </div>
     );
   }

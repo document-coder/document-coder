@@ -33,17 +33,15 @@ class CodingEditorApp extends Component {
         ) : (
           <Heading title={`Annotation Scheme Editor`} project_prefix={project_prefix} />
         )}
-        <div id="coding-list">
-          {coding_id ? (
-            <CodingEditor coding_id={coding_id} />
-          ) : (
-            <CodingList
-              project_prefix={project_prefix}
-              codings={codings}
-              default_coding={project_settings.default_coding}
-            />
-          )}
-        </div>
+        {coding_id ? (
+          <CodingEditor coding_id={coding_id} />
+        ) : (
+          <CodingList
+            project_prefix={project_prefix}
+            codings={codings}
+            default_coding={project_settings.default_coding}
+          />
+        )}
       </div>
     );
   }
