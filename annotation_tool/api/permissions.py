@@ -14,6 +14,7 @@ class ProjectBasePermission(permissions.BasePermission):
     try:
       return get_project_id_from_request(request)
     except (KeyError, ValueError):
+      self.message = "Invalid or missing project ID in request"
       return None
 
   def _get_user_role(self, user, project_id):
@@ -24,6 +25,7 @@ class ProjectBasePermission(permissions.BasePermission):
 
   def has_permission(self, request, view):
     if not request.user.is_authenticated:
+      self.message = "Authentication required"
       return False
     
     # Admins always have permission
