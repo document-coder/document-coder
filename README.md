@@ -2,6 +2,8 @@
 
 A web-based platform that helps research teams systematically annotate collections of documents. This tool streamlines the process of coordinating multiple annotators marking up a collections of documents, ensuring consistent and organized data collection.
 
+## What does it do?
+
 #### Easy-to-use annotation interface
   - Presents documents and annotation questions side-by-side
   - Enables highlighting relevant text passages while answering questions
