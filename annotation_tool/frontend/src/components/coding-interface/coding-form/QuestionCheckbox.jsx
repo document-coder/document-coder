@@ -65,7 +65,7 @@ export const OtherField = connect(
       return (
         (
           this.props.localState.localCodingInstance[
-            this.props.localState.selectedQuestionIdentifier
+          this.props.localState.selectedQuestionIdentifier
           ] || {}
         ).values || {}
       );
@@ -82,6 +82,8 @@ export const OtherField = connect(
       this.props.setter(e.target.value);
     }
     render() {
+      // OTHER FIELD CURRENTLY DISABLED
+      return <></>
       return (
         <div
           className={
