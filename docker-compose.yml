@@ -38,19 +38,6 @@ services:
     depends_on:
       - db
 
-  # build-frontend:
-  #   build: .
-  #   restart: unless-stopped
-  #   command: >
-  #     sh -c "
-  #       cd /app/annotation_tool/frontend;
-  #       ls;
-  #       npm install && 
-  #       npm ci && 
-  #       npm run dev"
-  #   volumes:
-  #     - ./:/app/
-
   vite-dev:
     build: .
     restart: unless-stopped

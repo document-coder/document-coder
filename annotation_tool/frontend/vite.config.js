@@ -14,8 +14,10 @@ export default defineConfig(({ command }) => ({
       output: {
         entryFileNames: 'main.js',
         assetFileNames: '[name][extname]',
-        // format: 'es' // Ensures compatibility with ESM
-        format: 'iife', name: 'appBundle'
+        // Switching to IIFE will break SCSS compilation but allows for some quality-of-life features during React develpment.
+        // If you switch to IIFE during development, be sure to switch back to ESM before committing your changes.
+        format: 'es' // Ensures compatibility with ESM
+        // format: 'iife', name: 'appBundle'  
       }
     },
     minify: false
