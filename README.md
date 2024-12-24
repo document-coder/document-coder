@@ -28,7 +28,7 @@ Document Management | Annotation Editing & Tracking
 
 ## Getting Started
 
-### For Project Leaders
+### Setting up a new Project
 
   1. Create a new project
   2. Upload your documents
@@ -38,7 +38,7 @@ Document Management | Annotation Editing & Tracking
 
 [See the full Project Setup Guide](docs/project_setup.md)
 
-### For Annotators
+### Annotating Documents
 
   1. Accept your project invitation
   2. Log in with your institutional credentials
