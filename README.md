@@ -48,9 +48,8 @@ Document Management | Annotation Editing & Tracking
 
 ### For Administrators
 
-  - [Installation Guide](docs/installation.md)
-  - [Configuration Guide](docs/configuration.md)
-  - [Maintenance Guide](docs/maintenance.md)
+  - [Setting up a Test Instance](docs/developer_setup.md)
+  - [Deployment](docs/deployment_guide.md)
 
 ## Citation
 
@@ -60,8 +59,6 @@ If you use this tool in your research, please cite:
 
 ## Documentation
 
-- [User Guides](docs/user/index.md)
-- [Technical Documentation](docs/technical/index.md)
 - [API Reference](docs/api/index.md)
 
 ## License
