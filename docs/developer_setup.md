@@ -1,5 +1,7 @@
 # Setting up a test environment.
 
+## STEP 1: Installing the server and getting it running
+
   1. Download the repo:
 
     git clone https://github.com/davidbstein/document-coder.git
@@ -8,7 +10,7 @@
 
     cp annoation_tool/.env.example annotation_tool/.env
 
-## With VSCode and Docker
+### The easy way: with VSCode and Docker
 
 The easiest way to get started testing and modifying the tool:
 
@@ -19,7 +21,7 @@ The easiest way to get started testing and modifying the tool:
   - You can now test the service in your browser by visiting http://localhost:8000
   - In the VSCode debug pane, running the task "Python Debugger: Remote Attach" will allow you to set breakpoints and observe variable values in the python code.
     
-## Manual installation
+### The harder way: manual installation
 
 
   2. Install required resources:
@@ -49,3 +51,11 @@ The easiest way to get started testing and modifying the tool:
 
     cd annotation_tool
     python managem.py runserver --nostatic
+
+
+## STEP 2: Setting up a test project
+
+  1. Sign into the admin page at `localhost:8000/admin`. The username and password are set in `.env` and default to `admin` and `adminpassword`.
+  2. Add a new `Project`. I usually use prefix: `T`, name: `Test Project`. Note the project ID.
+  3. Add a new `Project Role` to the project, using the Project ID you noted in the last step.
+  4. Go back to the homepage and log out.
