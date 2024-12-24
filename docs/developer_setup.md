@@ -4,6 +4,10 @@
 
     git clone https://github.com/davidbstein/document-coder.git
 
+  2. Create an `annotation_tool/.env` file by copying the `.env.example` file. Most of the default values will work, but you'll need to get your own Google OAuth account settings.
+
+    cp annoation_tool/.env.example annotation_tool/.env
+
 ## With VSCode and Docker
 
 The easiest way to get started testing and modifying the tool:
@@ -29,10 +33,6 @@ The easiest way to get started testing and modifying the tool:
     pip install -r requirements.txt
     cd annotation_tool/frontend
     npm install
-
-  4. Create an `annotation_tool/.env` file or set your environment variables. Use the `.env.example` file for reference.
-
-    cp annoation_tool/.env.example annotation_tool/.env
 
   5. Set up the database
 
