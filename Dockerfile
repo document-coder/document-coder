@@ -18,5 +18,14 @@ RUN apt-get update \
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 RUN pip install debugpy
+
 COPY . .
+WORKDIR /app/annotation_tool
+
+WORKDIR /app/annotation_tool/frontend
+RUN rm -rf node_modules package-lock.json \
+    && npm cache clean --force \
+    && npm install \
+    && npm rebuild
+
 WORKDIR /app/annotation_tool
