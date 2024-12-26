@@ -9,8 +9,6 @@ SECURE_SSL_REDIRECT = env('SSL_REDIRECT', default=True)
 ALLOWED_HOSTS = [
   'policycoding.com',
   'documentcoding.com',
-  'policy-coder-web.eba-9sxfr9sk.us-east-1.elasticbeanstalk.com',
-  'documentcoding.us-east-1.elasticbeanstalk.com',
   env('ADDITIONAL_ALLOWED_HOSTS', default=''),
 ]
 
