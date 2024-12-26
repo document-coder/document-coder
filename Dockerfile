@@ -27,5 +27,6 @@ RUN rm -rf node_modules package-lock.json \
     && npm cache clean --force \
     && npm install \
     && npm rebuild
+RUN npm run build
 
 WORKDIR /app/annotation_tool
