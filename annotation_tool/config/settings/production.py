@@ -32,10 +32,14 @@ else:
   }
 
 # Static/Media files - production paths
-STATIC_URL = env('STATIC_PATH', default='/static/')
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / '.static'
-MEDIA_URL = env('MEDIA_PATH', default='/media/')
-MEDIA_ROOT = BASE_DIR / '.data'
+
+STATICFILES_FINDERS = [
+  'django.contrib.staticfiles.finders.FileSystemFinder',
+  'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+]
+
 
 # Cache settings
 CACHES = {

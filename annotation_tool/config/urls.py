@@ -19,6 +19,7 @@ project_router.register(r'policy',                api_views.PolicyViewSet)
 project_router.register(r'project_role',          api_views.ProjectRoleViewSet)
 project_router.register(r'policy_instance',       api_views.PolicyInstanceViewSet)
 project_router.register(r'policy_instance_meta',  api_views.PolicyInstanceMetaViewSet, 'PolicyInstanceMeta')
+project_router.register(r'coding_instance_meta',  api_views.CodingInstanceMetaViewSet, 'CodingInstanceMeta')
 project_router.register(r'project',               api_views.ProjectViewSet)
 project_router.register(r'timing_session',        api_views.TimingSessionViewSet)
 

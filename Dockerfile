@@ -29,4 +29,9 @@ RUN rm -rf node_modules package-lock.json \
     && npm rebuild
 RUN npm run build
 
+# RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+#     DEBIAN_FRONTEND=noninteractive apt-get install -y mailutils postfix && \
+#     postconf -e "myhostname = yourdomain.com" && \
+#     postconf -e "mydestination = yourdomain.com, localhost.localdomain, localhost"
+
 WORKDIR /app/annotation_tool

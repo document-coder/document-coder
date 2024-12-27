@@ -238,6 +238,25 @@ class CodingInstanceViewSet(ProjectFilteredViewSet):
     return Response(CodingInstanceSerializer(instance).data)
 
 
+class CodingInstanceMetaViewSet(ProjectFilteredViewSet):
+  queryset = CodingInstance.objects.all()
+  serializer_class = CodingInstanceSerializer
+  permission_classes = [MetaContentPermission]
+  filter_backends = [DjangoFilterBackend, filters.OrderingFilter]
+  ordering_fields = '__all__'
+  filterset_fields = [
+    'id', 
+    'coder_email',
+    'policy_instance_id', 
+    'coding_id', 
+    'created_dt'
+  ]
+
+  def get_queryset(self):
+    return self.queryset.only(
+      'id', 'project', 'coder_email', 'policy_instance_id', 'coding_id', 'created_dt', 'last_updated'
+    )
+
 class PolicyInstanceViewSet(ProjectFilteredViewSet):
   queryset = PolicyInstance.objects.all()
   serializer_class = PolicyInstanceSerializer
