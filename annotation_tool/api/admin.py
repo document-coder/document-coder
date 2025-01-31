@@ -3,10 +3,11 @@ from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 from api import models
 
-  # Project Admin
+# Project Admin
 class ProjectAdmin(admin.ModelAdmin):
   list_display = ('name', 'prefix', 'id')
   fields = ('name', 'prefix')
+  
 
   # Project Role Admin
 class ProjectRoleAdmin(admin.ModelAdmin):

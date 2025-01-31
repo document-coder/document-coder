@@ -5,12 +5,20 @@ get_project_id_from_request
 from django_filters.rest_framework import DjangoFilterBackend
 from django.http import JsonResponse
 
-from rest_framework.decorators import action
-from rest_framework.response import Response
+from rest_framework.decorators import (
+  action, 
+  api_view, 
+  permission_classes,
+)
+from rest_framework.response import (
+  Response,
+)
 from rest_framework import (
   viewsets, 
   filters,
 )
+from rest_framework.authtoken.models import Token
+from rest_framework.permissions import IsAuthenticated
 
 from api.permissions import (
   ProjectRolePermission,
@@ -45,6 +53,19 @@ from api.serializers import (
   TimingSessionSerializer,
 )
 
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated])
+# def create_token(request):
+#     """Create or get API token for the authenticated user"""
+#     token, created = Token.objects.get_or_create(user=request.user)
+#     return Response({'token': token.key})
+
+# @api_view(['POST'])
+# @permission_classes([IsAuthenticated]) 
+# def revoke_token(request):
+#     """Revoke the current user's API token"""
+#     Token.objects.filter(user=request.user).delete()
+#     return Response({'status': 'token revoked'})
 
 def get_current_user(request):
   return JsonResponse({
