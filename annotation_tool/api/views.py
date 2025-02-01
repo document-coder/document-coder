@@ -234,6 +234,20 @@ class CodingInstanceViewSet(ProjectFilteredViewSet):
     'created_dt'
   ]
 
+  def get_queryset(self):
+    queryset = super().get_queryset()
+    policy_instance_id = self.request.query_params.get('policy_instance_id')
+    coding_id = self.request.query_params.get('coding_id')
+    coder_email = self.request.query_params.get('coder_email')
+    if policy_instance_id:
+      queryset = queryset.filter(policy_instance_id=policy_instance_id)
+    if coding_id:
+      queryset = queryset.filter(coding_id=coding_id)
+    if coder_email:
+      queryset = queryset.filter(coder_email=coder_email)
+    return queryset
+
+
   def create(self, request, **kw):
     policy_id=PolicyInstance.objects.get(
       id=request.data['policy_instance_id']

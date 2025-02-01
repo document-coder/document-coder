@@ -76,7 +76,10 @@ async function doAPIGet({ path, dispatch, actionType, params = {}, payload_fn = 
     actionType,
     payload_fn,
     use_project_prefix ? `${API_PREFIX}/${path}` : path,
-    { headers: { "X-CSRFToken": await get_CSRF_token() } },
+    {
+      headers: { "X-CSRFToken": await get_CSRF_token() },
+      params: params
+    },
   );
 }
 
