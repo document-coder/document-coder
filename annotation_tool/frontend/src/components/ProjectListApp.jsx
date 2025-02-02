@@ -49,6 +49,9 @@ class ProjectListApp extends Component {
                 To add a new project, please contact the administrator of this server: ADMIN_NAME_HERE!
               </li>
               <li>
+                To be added to a project, contact the project owner.
+              </li>
+              <li>
                 Futher documentation can be found here, once someone writes it: LINK_GOES_HERE!
               </li>
             </ul>

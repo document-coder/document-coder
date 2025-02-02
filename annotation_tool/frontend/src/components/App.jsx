@@ -12,6 +12,10 @@ const log = Logger("app", "grey", "background-color: white; border: 3px solid bl
 
 class App extends Component {
   render() {
+    if (location.pathname === "/c/") {
+      log(`Redirecting to project list!`);
+      location.href = "/";
+    }
     log(`App Loading!`);
     return (
       <Provider store={store}>

@@ -12,7 +12,7 @@ export default function Heading({ coder_email, title }) {
           {title} </h1>
       </div>
       <div>
-        <a href="..">back</a>
+        <a href="javascript:history.back()">back</a>
         <a href={`${home_url}`}>home</a>
         <a href="/accounts/logout">logout</a>
       </div>
