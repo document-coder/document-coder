@@ -26,6 +26,7 @@ const ErrorItem = ({ err }) => {
 
 class Loading extends Component {
   render() {
+    const { errors: { active_call_ids = {}, errors = [] } } = this.props;
     if (!document.readyState == "complete") {
       return (
         <div id="loading-page" className="page-root">
@@ -34,11 +35,29 @@ class Loading extends Component {
         </div>
       );
     }
-    const errors = this.props.errors?.errors || [];
+    if (Object.keys(active_call_ids).length > 0) {
+      return (
+        <div id="loading-page" className="page-root">
+          <Heading title="loading..." />
+          <div id="loading-spinner">
+            <h1>loading...</h1>
+            <div> <ul>
+              {Object.keys(active_call_ids).map((call_id, i) => {
+                const active_call = active_call_ids[call_id];
+                const time_elapsed = ((active_call.end_time || new Date().getTime()) - active_call.start_time) / 1000;
+                const status = active_call.status;
+                return <li key={i}>{active_call.task_name} [{status}]</li>
+              })}
+            </ul>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div id="error-page" className="page-root card-app-root">
         <Heading title="(error)" />
-        <div class="card-app-content">
+        <div className="card-app-content">
           <div id="error-headline">No data loaded.</div>
           <div id="error-list">
             <div>Review Recent Errors:</div>

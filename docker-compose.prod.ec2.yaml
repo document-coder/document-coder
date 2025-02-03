@@ -4,7 +4,7 @@ services:
     restart: always
     env_file: annotation_tool/.env
     command: >
-      sh -c "
+      sh -c " export NODE_OPTIONS=--max-old-space-size=1024 &&
        # cd /app/annotation_tool/frontend && 
        # npm install && npm run build &&
        # cd - &&

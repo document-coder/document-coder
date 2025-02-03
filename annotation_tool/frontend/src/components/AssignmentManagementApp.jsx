@@ -97,7 +97,7 @@ class AssignmentManagementApp extends Component {
 
     const createDiv = <div className="create-assignment-holder">
       {!this.state.showCreateForm ? (
-        project_roles[CURRENT_USER].can_annotate &&
+        project_roles[CURRENT_USER]?.can_annotate &&
         <button
           onClick={() => this.setState({ showCreateForm: true })}
           className="create-button">

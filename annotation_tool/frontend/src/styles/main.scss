@@ -29,8 +29,18 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
-  font-size: 6em;
   color: lightgrey;
+  flex-wrap: wrap;
+  h1 {
+    font-size: 6em;
+  }
+  ul {
+    font-size: 2em;
+    list-style-type: none;
+    li {
+      margin: 1em;
+    }
+  }
 }
 
 .card-app-root {

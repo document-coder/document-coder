@@ -3,6 +3,7 @@ import { TYPE_ERROR_EXPLANATIONS } from "src/actions/types";
 import _ from "lodash";
 
 const defaultState = {
+  active_call_ids: {}, // call_id: status_code
   errors: [],
 }
 
@@ -55,12 +56,52 @@ const injectToastOntoPage = (action) => {
 export default (state = defaultState, action) => {
   switch (action.type) {
     case APIStatusActionTypes.START:
-      return state;
+      if (state.active_call_ids[action.call_id]) {
+        return state;
+      } else {
+        return {
+          ...state,
+          active_call_ids: {
+            ...state.active_call_ids,
+            [action.call_id]: {
+              status: "LOADING...",
+              task_name: action.payload?.actionType || "",
+              start_time: new Date().getTime(),
+            },
+          },
+        }
+      }
     case APIStatusActionTypes.SUCCESS:
-      return state;
+      const newState = {
+        ...state,
+        active_call_ids: {
+          ...state.active_call_ids,
+          [action.call_id]: {
+            ...state.active_call_ids[action.call_id] || {},
+            status: "DONE",
+            end_time: new Date().getTime(),
+          }
+        },
+      };
+      // if there all active calls are SUCCESS now that this call_id is SUCCESS, clear the active_call_ids
+      if (_.every(newState.active_call_ids, { status: "SUCCESS" })) {
+        newState.active_call_ids = {};
+      }
+      return newState;
     case APIStatusActionTypes.ERROR:
       injectToastOntoPage(action.payload);
-      return { ...state, errors: [...state.errors, action.payload] };
+      return {
+        ...state,
+        active_call_ids: {
+          ...state.active_call_ids,
+          [action.call_id]: {
+            ...state.active_call_ids[action.call_id] || {},
+            status: "ERROR",
+            end_time: new Date().getTime(),
+          }
+        },
+        errors: [...state.errors, action.payload],
+      };
     default:
       return state;
   }
