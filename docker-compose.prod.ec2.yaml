@@ -5,9 +5,10 @@ services:
     env_file: annotation_tool/.env
     command: >
       sh -c " export NODE_OPTIONS=--max-old-space-size=1024 &&
-       # cd /app/annotation_tool/frontend && 
-       # npm install && npm run build &&
-       # cd - &&
+       cd /app/annotation_tool/frontend &&    
+       rm -rf node_modules package-lock.json && # addresses known bug in npm. see https://github.com/npm/cli/issues/4828
+       npm install && npm run build &&
+       cd - &&
        python manage.py makemigrations api &&
        python manage.py migrate && 
        python manage.py collectstatic --noinput &&
